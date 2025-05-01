@@ -22,14 +22,14 @@ class MainHandler(tornado.web.RequestHandler):
             http_client.close()
     
 class Data(tornado.web.RequestHandler):
-    def get(self, post_id):
+    def get(self, get_id):
         # 1データ取得
         try:
-            post_id = int(post_id)
+            get_id = int(get_id)
             found_post = None
 
             for post in posts:
-                if post['id'] == post_id:
+                if post['id'] == get_id:
                     found_post = post
                     break
             if found_post:
@@ -38,14 +38,28 @@ class Data(tornado.web.RequestHandler):
             self.set_status(400)
             self.write({"error": "Invalid Value"})
         except Exception as e:
-            self.write({'error': str(e)})
-        
+            self.write({'error': str(e)})     
 
+class Create(tornado.web.RequestHandler):
+    def post(self):
+        post_id = max([post['id'] for post in posts ])
+        print(post_id)
+        posts['id'] = post_id
+        self.write({'ok': ""})
+
+class Delete(tornado.web.RequestHandler):
+    def delete(self, delete_id):
+        delete_id = int(delete_id)
+        global posts
+        posts = [post for post in posts if post['id'] != delete_id]
+        self.write({'post': posts})
 
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
-        (r"/data/([0-9]+)", Data)
+        (r"/data/([0-9]+)", Data),
+        (r"/create", Create),
+        (r"/delete/([0-9]+)", Delete),
     ])
 
 async def main():
