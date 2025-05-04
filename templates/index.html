@@ -7,6 +7,21 @@
     <title>hello</title>
   </head>
   <body>
-    <p>ようこそ</p>
+    <form method="post" action="/">
+      <textarea
+        name="body"
+        cols="40"
+        rows="1"
+        placeholder="入力して"
+      ></textarea>
+      <input type="submit" />
+    </form>
+    <div>
+      <ul>
+        {% for memo in memo_list %}
+        <li>{{memo}}</li>
+        {% end %}
+      </ul>
+    </div>
   </body>
 </html>

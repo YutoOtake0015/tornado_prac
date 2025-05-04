@@ -5,10 +5,16 @@ import os
 
 # 取得データ格納領域
 posts = {}
+memo_list=[]
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        self.render("index.html", memo_list=memo_list)
+    
+    def post(self):
+        body = self.get_argument('body')
+        memo_list.append(body)
+        self.render("index.html", memo_list=memo_list)
         
 
 class Get(tornado.web.RequestHandler):
