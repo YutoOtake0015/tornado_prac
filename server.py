@@ -1,11 +1,17 @@
 import asyncio
 import tornado
 import json
+import os
 
 # 取得データ格納領域
 posts = {}
 
 class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("index.html")
+        
+
+class Get(tornado.web.RequestHandler):
     async def get(self):
         # 複数データ取得
         http_client = tornado.httpclient.AsyncHTTPClient()
@@ -57,10 +63,14 @@ class Delete(tornado.web.RequestHandler):
 def make_app():
     return tornado.web.Application([
         (r"/", MainHandler),
+        (r"/get", Get),
         (r"/data/([0-9]+)", Data),
         (r"/create", Create),
         (r"/delete/([0-9]+)", Delete),
-    ])
+    ],
+        template_path=os.path.join(os.getcwd(),"templates"),
+        static_path=os.path.join(os.getcwd(),"static"),
+    )
 
 async def main():
     app = make_app()
