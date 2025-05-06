@@ -17,12 +17,18 @@
       <input type="submit" />
     </form>
     <div>
-      <ul>
-        {% for memo in memo_list %}
-        <li>{{memo}}</li>
-
+      <table>
+        {% for i,memo in enumerate(memo_list) %}
+        <tr>
+          <td>{{memo}}</td>
+          <td>
+            <form method="post" action="/delete" value="{{i}}">
+              <button type="submit">削除</button>
+            </form>
+          </td>
+        </tr>
         {% end %}
-      </ul>
+      </table>
     </div>
   </body>
 </html>
