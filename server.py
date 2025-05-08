@@ -7,17 +7,18 @@ import os
 items=[]
 # items=[{"id": 1, "title": "タイトル", "content": "内容"}]
 
-class ItemHandler(tornado.web.RequestHandler):  
+class Mainhandler(tornado.web.RequestHandler):  
     def get(self):
-        self.write({"items": items})
+        self.render("index.html", items=items)
 
     def post(self):
         try:
-            data = json.loads(self.request.body.decode('utf-8'))
-            new_item = {"id": len(items)+1, **data}
+            title = self.get_argument("title")
+            content = self.get_argument("content")
+            new_item = {"id": len(items)+1, "title": title, "content": content}
             items.append(new_item)
             self.set_status(201)
-            self.write(json.dumps(new_item))
+            self.render("index.html", items=items)
         except Exception as e:
             self.set_status(400)
             self.write(json.dumps({"error": str(e)}))
@@ -25,7 +26,7 @@ class ItemHandler(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
-        (r"/items", ItemHandler),
+        (r"/", Mainhandler),
     ],
         template_path=os.path.join(os.getcwd(),"templates"),
         static_path=os.path.join(os.getcwd(),"static"),
