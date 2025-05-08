@@ -23,10 +23,20 @@ class Mainhandler(tornado.web.RequestHandler):
             self.set_status(400)
             self.write(json.dumps({"error": str(e)}))
 
+class ItemHandler(tornado.web.RequestHandler):
+    def get(self, item_id):
+        for i in items:
+            if i['id'] == int(item_id):
+                item = i
+                break
+
+        self.render("edit.html", item=item)
+
 
 def make_app():
     return tornado.web.Application([
         (r"/", Mainhandler),
+        (r"/items/([0-9]+)", ItemHandler),
     ],
         template_path=os.path.join(os.getcwd(),"templates"),
         static_path=os.path.join(os.getcwd(),"static"),
