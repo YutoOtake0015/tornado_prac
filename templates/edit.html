@@ -18,11 +18,11 @@
   <body>
     <dev class="container">
       <div>
-        <form action="">
+        <form class="form-group" method="post" action="/items/{{item['id']}}">
           <div class="mb-3">
             <label class="form-label" type="text">タイトル </label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               name="title"
               value="{{item['title']}}"
@@ -39,6 +39,7 @@
 {{item['content']}}</textarea
             >
           </div>
+          <input type="submit" />
         </form>
       </div>
     </dev>

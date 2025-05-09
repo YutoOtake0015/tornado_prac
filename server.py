@@ -29,10 +29,28 @@ class ItemHandler(tornado.web.RequestHandler):
             if i['id'] == int(item_id):
                 item = i
                 break
-
         self.render("edit.html", item=item)
 
+    def post(self, item_id):
+        try:
+            item_id = int(item_id)
+            title = self.get_argument("title")
+            content = self.get_argument("content")
 
+            for i in items:
+                if i["id"] == item_id:
+                    item = i
+                    break
+            
+            item["title"] = title
+            item["content"] = content
+
+            self.set_status(200)
+            self.redirect("/") 
+        except Exception as e:
+            self.set_status(400)
+            self.write(json.dumps({"error": str(e)}))
+    
 def make_app():
     return tornado.web.Application([
         (r"/", Mainhandler),
