@@ -32,10 +32,6 @@ class ItemHandler(tornado.web.RequestHandler):
             item = db.get_item(item_id)
             print("item", item)
 
-            # for i in items:
-            #     if i['id'] == int(item_id):
-            #         item = i
-            #         break
             self.render("edit.html", item=item)
         except Exception as e:
             self.set_status(400)
@@ -47,20 +43,11 @@ class ItemHandler(tornado.web.RequestHandler):
             if "/delete" in self.request.path:
                 db.delete_item(item_id)
                 items = db.get_items()
-                # global items
-                # items = [i for i in items if i['id'] != item_id]
             else:
                 item_id = int(item_id)
                 title = self.get_argument("title")
                 content = self.get_argument("content")
                 
-                # for i in items:
-                #     if i["id"] == item_id:
-                #         item = i
-                #         break
-
-                # item["title"] = title
-                # item["content"] = content
                 db.update_item(item_id,title,content)
 
             self.set_status(200)
