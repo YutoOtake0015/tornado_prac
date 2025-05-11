@@ -58,6 +58,6 @@ def delete_item(id):
 def update_item(id,title,content):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE FROM items SET title=?, content=? WHERE id=?;", (title,content,id))
+    cursor.execute("UPDATE items SET title=?, content=? WHERE id=?;", (title,content,id))
     conn.commit()
     conn.close()
