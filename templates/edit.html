@@ -16,16 +16,16 @@
     <title>hello</title>
   </head>
   <body>
-    <dev class="container">
+    <div class="container">
       <div>
-        <form class="form-group" method="post" action="/items/{{item['id']}}">
+        <form class="form-group" method="post" action="/items/{{ item['id'] }}">
           <div class="mb-3">
-            <label class="form-label" type="text">タイトル </label>
+            <label class="form-label" type="text">タイトル</label>
             <input
               type="text"
               class="form-control"
               name="title"
-              value="{{item['title']}}"
+              value="{{ item['title'] }}"
             />
           </div>
           <div class="mb-3">
@@ -36,12 +36,12 @@
               name="content"
               rows="3"
             >
-{{item['content']}}</textarea
+{{ item['content'] }}</textarea
             >
           </div>
           <input type="submit" />
         </form>
       </div>
-    </dev>
+    </div>
   </body>
 </html>
